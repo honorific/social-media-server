@@ -3,8 +3,7 @@ import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import helmet from 'helmet'
 import morgan from 'morgan'
-import userRoute from './routes/users.js'
-
+import modules from './modules/index.js'
 dotenv.config()
 
 const app = express()
@@ -18,8 +17,7 @@ mongoose
 
 app.use(helmet())
 app.use(morgan('common'))
-
-app.use('/api/user', userRoute)
+app.use(modules)
 
 app.listen(port, () => {
   console.log(`Backend running in port ${port}`)
