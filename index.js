@@ -15,6 +15,9 @@ mongoose
   .then(() => console.log('Connected to MongoDB'))
   .catch(() => console.log("Couldn't connect to MongoDB"))
 
+app.use(helmet())
+app.use(morgan('common'))
+
 app.listen(port, () => {
   console.log(`Backend running in port ${port}`)
 })
