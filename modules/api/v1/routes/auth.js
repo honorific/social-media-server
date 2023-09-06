@@ -1,9 +1,9 @@
 import express from 'express'
 
+import {register} from '../controller/user/index.js'
+
 const router = express.Router()
 
-router.get('/', (req, res) => {
-  res.send('hey its auth route')
-})
+router.post('/register', register)
 
 export default router
