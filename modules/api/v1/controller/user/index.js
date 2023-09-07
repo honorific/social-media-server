@@ -19,3 +19,12 @@ export const register = async (req, res) => {
     res.status(401).json('unAuthorized')
   }
 }
+
+export const login = async (req, res) => {
+  try {
+    const user = await User.findOne({email: req.body.email})
+    !user && res.status(404).json('user not found')
+  } catch (error) {
+    console.log(error)
+  }
+}
