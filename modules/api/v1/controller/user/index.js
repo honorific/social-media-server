@@ -1,35 +1,48 @@
-import User from '../../models/User.js'
 import bcrypt from 'bcrypt'
+import User from '../../models/User.js'
 
-export const register = async (req, res) => {
-  try {
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(req.body.password, salt)
-
-    const newUser = new User({
-      username: req.body.username,
-      email: req.body.email,
-      password: hashedPassword,
-    })
-
-    const user = await newUser.save()
-    res.status(201).json(user)
-  } catch (err) {
-    console.log(err)
-    res.status(401).json('unAuthorized')
+export const updateUser = async (req, res) => {
+  if (req.body.userId === req.params.id || req.user.isAdmin) {
+    if (req.body.password) {
+      try {
+        const salt = await bcrypt.genSalt(10)
+        req.body.password = await bcrypt.hash(req.body.password, salt)
+      } catch (error) {
+        return res.status(500).json(error)
+      }
+    }
+    try {
+      const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+      })
+      return res.status(200).json('account has been updated')
+    } catch (error) {
+      return res.status(500).json(error)
+    }
+  } else {
+    return res.status(403).json('You can update only your account!')
   }
 }
 
-export const login = async (req, res) => {
-  try {
-    const user = await User.findOne({email: req.body.email})
-    !user && res.status(404).json('user not found')
-
-    const validPassword = await bcrypt.compare(req.body.password, user.password)
-    !validPassword && res.status(400).json('wrong password')
-
-    res.status(200).json(user)
-  } catch (error) {
-    console.log(error)
+export const deleteUser = async (req, res) => {
+  if (req.body.userId === req.params.id || req.user.isAdmin) {
+    if (req.body.password) {
+      try {
+        const salt = await bcrypt.genSalt(10)
+        req.body.password = await bcrypt.hash(req.body.password, salt)
+      } catch (error) {
+        return res.status(500).json(error)
+      }
+    }
+    try {
+      const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+      })
+      return res.status(200).json('account has been updated')
+    } catch (error) {
+      return res.status(500).json(error)
+    }
+  } else {
+    return res.status(403).json('You can update only your account!')
   }
 }
