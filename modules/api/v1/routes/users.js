@@ -1,5 +1,5 @@
 import express from 'express'
-import {updateUser} from '../controller/user.js'
+import {deleteUser, updateUser} from '../controller/user/index.js'
 const router = express.Router()
 
 router.get('/', (req, res) => {
@@ -7,5 +7,6 @@ router.get('/', (req, res) => {
 })
 
 router.put('/:id', updateUser)
+router.delete('/:id', deleteUser)
 
 export default router
