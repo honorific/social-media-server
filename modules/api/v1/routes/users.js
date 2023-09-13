@@ -3,6 +3,7 @@ import {
   deleteUser,
   followUser,
   getUser,
+  unFollowUser,
   updateUser,
 } from '../controller/user/index.js'
 const router = express.Router()
