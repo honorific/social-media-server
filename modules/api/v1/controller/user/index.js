@@ -67,3 +67,24 @@ export const followUser = async (req, res) => {
     res.status(403).json('you cant follow yourself')
   }
 }
+
+export const unFollowUser = async (req, res) => {
+  if (req.body.userId !== req.params.id) {
+    try {
+      const user = await User.findById(req.params.id)
+      const currentUser = await User.findById(req.body.userId)
+
+      if (user.followers.includes(req.body.userId)) {
+        await user.updateOne({$pull: {followers: req.body.userId}})
+        await currentUser.updateOne({$pull: {followings: req.params.id}})
+        res.status(201).json('you dont follow this user')
+      } else {
+        res.status(403).json('you already unfollow this user')
+      }
+    } catch (error) {
+      res.status(500).json(error)
+    }
+  } else {
+    res.status(403).json('you cant unfollow yourself')
+  }
+}
