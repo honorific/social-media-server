@@ -5,5 +5,6 @@ const router = express.Router()
 router.post('/', newPost)
 router.put('/:id', updatePost)
 router.delete('/:id', deletePost)
+router.put('/:id/like')
 
 export default router
