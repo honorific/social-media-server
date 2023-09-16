@@ -72,6 +72,7 @@ export const getTimeline = async (req, res) => {
         return Post.find({userId: friendId})
       }),
     )
+    console.log('friendPosts is: ', friendsPosts)
     res.status(200).json(userPosts.concat(...friendsPosts))
   } catch (error) {
     res.status(500).json(error)
