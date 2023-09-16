@@ -1,4 +1,5 @@
 import Post from '../../models/Post.js'
+import User from '../../models/User.js'
 
 export const newPost = async (req, res) => {
   const newPost = new Post(req.body)
@@ -57,6 +58,21 @@ export const getPost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id)
     res.status(200).json(post)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
+export const getTimeline = async (req, res) => {
+  try {
+    const currentUser = await User.findById(req.body.userId)
+    const userPosts = await Post.find({userId: currentUser._id})
+    const friendsPosts = await Promise.all(
+      currentUser.followings.map((friendId) => {
+        return Post.find({userId: friendId})
+      }),
+    )
+    res.status(200).json(userPosts.concat(...friendsPosts))
   } catch (error) {
     res.status(500).json(error)
   }
