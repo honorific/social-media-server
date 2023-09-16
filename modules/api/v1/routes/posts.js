@@ -1,5 +1,5 @@
 import express from 'express'
-import {deletePost, likePost, newPost, updatePost} from '../controller/posts/index.js'
+import {deletePost, getPost, likePost, newPost, updatePost} from '../controller/posts/index.js'
 const router = express.Router()
 
 router.post('/', newPost)
