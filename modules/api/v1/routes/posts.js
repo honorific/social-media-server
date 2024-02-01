@@ -6,6 +6,7 @@ import {
   likePost,
   newPost,
   updatePost,
+  getUserPosts,
 } from '../controller/posts/index.js'
 const router = express.Router()
 
@@ -14,6 +15,7 @@ router.put('/:id', updatePost)
 router.delete('/:id', deletePost)
 router.put('/:id/like', likePost)
 router.get('/:id', getPost)
-router.get('/timeline/all', getTimeline)
+router.get('/timeline/:userId', getTimeline)
+router.get('/profile/:username', getUserPosts)
 
 export default router
