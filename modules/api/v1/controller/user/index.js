@@ -38,7 +38,7 @@ export const deleteUser = async (req, res) => {
 }
 
 export const getUser = async (req, res) => {
-  const userId = req.query.user
+  const userId = req.query.userId
   const username = req.query.username
   try {
     const user = userId
