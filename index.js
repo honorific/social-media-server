@@ -5,6 +5,12 @@ import helmet from 'helmet'
 import morgan from 'morgan'
 import modules from './modules/index.js'
 import multer from 'multer'
+import path from 'path'
+
+import {dirname} from 'node:path'
+import {fileURLToPath} from 'node:url'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 dotenv.config()
 
@@ -19,6 +25,8 @@ mongoose
   .then(() => console.log('Connected to MongoDB'))
   .catch(() => console.log("Couldn't connect to MongoDB"))
 
+app.use('/images', express.static(path.join(__dirname, 'public/images')))
+app.use(express.json())
 app.use(helmet())
 app.use(morgan('common'))
 
