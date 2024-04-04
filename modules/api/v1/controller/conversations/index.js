@@ -22,3 +22,14 @@ export const getConversation = async (req, res) => {
     res.status(500).json(err)
   }
 }
+
+// get conversation includes two userId
+export const getConversationWithTwoUserId = async (req, res) => {
+  try {
+    const conversation = await Conversation.findOne({
+      members: {$all: [req.params.firstUserId, req.params.secondUserId]},
+    })
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
